@@ -10,7 +10,10 @@ defmodule SpendlyApp.Tracking do
     |> Repo.insert()
   end
 
-  def list_budgets, do: Repo.all(Budget)
+  def list_budgets do
+    Repo.all(Budget)
+    |> Repo.preload(:creator)
+  end
 
   def get_budget!(id), do: Repo.get!(Budget, id)
 end
