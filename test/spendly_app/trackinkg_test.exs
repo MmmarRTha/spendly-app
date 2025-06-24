@@ -32,18 +32,15 @@ defmodule SpendlyApp.TrackinkgTest do
     end
 
     test "create_budget/2 requires valid dates" do
-      user = SpendlyApp.AccountsFixtures.user_fixture()
-
-      attrs_end_before_start = %{
-        name: "Invalid Budget",
-        description: "A budget with invalid dates",
-        start_date: ~D[2025-07-23],
-        end_date: ~D[2025-06-23],
-        creator_id: user.id
-      }
+      attrs =
+        valid_budget_attributes()
+        |> Map.merge(%{
+          start_date: ~D[2025-07-23],
+          end_date: ~D[2025-06-23]
+        })
 
       assert {:error, %Ecto.Changeset{} = changeset} =
-               Tracking.create_budget(attrs_end_before_start)
+               Tracking.create_budget(attrs)
 
       assert changeset.valid? == false
       assert %{end_date: ["must end after start date"]} = errors_on(changeset)
