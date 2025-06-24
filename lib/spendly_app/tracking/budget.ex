@@ -1,4 +1,4 @@
-defmodule Tracking.Budget do
+defmodule SpendlyApp.Tracking.Budget do
   use Ecto.Schema
   import Ecto.Changeset
 
