@@ -1,6 +1,8 @@
 defmodule SpendlyApp.TrackinkgTest do
   use SpendlyApp.DataCase
 
+  import SpendlyApp.TrackingFixtures
+
   alias SpendlyApp.Tracking
 
   describe "budgets" do
@@ -9,13 +11,7 @@ defmodule SpendlyApp.TrackinkgTest do
     test "create_budget/2 with valid data creates a budget" do
       user = SpendlyApp.AccountsFixtures.user_fixture()
 
-      valid_attrs = %{
-        name: "Test Budget",
-        description: "A budget for testing",
-        start_date: ~D[2025-06-23],
-        end_date: ~D[2025-07-23],
-        creator_id: user.id
-      }
+      valid_attrs = valid_budget_attributes(%{creator_id: user.id})
 
       assert {:ok, %Budget{} = budget} = Tracking.create_budget(valid_attrs)
       assert budget.name == "Test Budget"
@@ -26,16 +22,11 @@ defmodule SpendlyApp.TrackinkgTest do
     end
 
     test "create_budget/2 requires name" do
-      user = SpendlyApp.AccountsFixtures.user_fixture()
+      attrs =
+        valid_budget_attributes()
+        |> Map.delete(:name)
 
-      attrs_without_name = %{
-        description: "A budget without a name",
-        start_date: ~D[2025-06-23],
-        end_date: ~D[2025-07-23],
-        creator_id: user.id
-      }
-
-      assert {:error, %Ecto.Changeset{} = changeset} = Tracking.create_budget(attrs_without_name)
+      assert {:error, %Ecto.Changeset{} = changeset} = Tracking.create_budget(attrs)
       assert changeset.valid? == false
       assert %{name: ["can't be blank"]} = errors_on(changeset)
     end
