@@ -10,6 +10,28 @@ defmodule SpendlyAppWeb.BudgetListLive do
 
   def render(assigns) do
     ~H"""
+    <.modal
+      :if={@live_action == :new}
+      id="create-budget-modal"
+      on_cancel={JS.navigate(~p"/budgets", replace: true)}
+      show
+    >
+      <.live_component
+        module={SpendlyAppWeb.CreateBudgetDialog}
+        id="create-budget"
+        current_user={@current_user}
+      />
+    </.modal>
+    <div class="flex justify-end">
+      <.link
+        navigate={~p"/budgets/new"}
+        class="flex gap-2 items-center px-3 py-2 text-gray-700 rounded-lg bg-slate-200 hover:bg-gray-200 hover:text-gray-800"
+      >
+        <.icon name="hero-plus" class="w-4 h-4" />
+        <span>New Budget</span>
+      </.link>
+    </div>
+
     <.table id="budgets" rows={@budgets}>
       <:col :let={budget} label="Name">{budget.name}</:col>
       <:col :let={budget} label="Description">{budget.description}</:col>
