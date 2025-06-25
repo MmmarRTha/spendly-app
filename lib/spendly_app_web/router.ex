@@ -68,6 +68,7 @@ defmodule SpendlyAppWeb.Router do
       on_mount: [{SpendlyAppWeb.UserAuth, :ensure_authenticated}] do
       live "/budgets", BudgetListLive, :index
       live "/budgets/new", BudgetListLive, :new
+      live "/budgets/:budget_id", BudgetShowLive, :show
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
