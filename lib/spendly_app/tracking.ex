@@ -10,8 +10,19 @@ defmodule SpendlyApp.Tracking do
     |> Repo.insert()
   end
 
-  def list_budgets do
-    Repo.all(Budget)
+  def list_budgets, do: list_budgets([])
+
+  def list_budgets(criteria) when is_list(criteria) do
+    query = from(b in Budget)
+
+    Enum.reduce(criteria, query, fn
+      {:user, user}, query ->
+        from b in query, where: b.creator_id == ^user.id
+
+      _, query ->
+        query
+    end)
+    |> Repo.all()
     |> Repo.preload(:creator)
   end
 

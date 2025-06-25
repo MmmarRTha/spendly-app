@@ -3,8 +3,11 @@ defmodule SpendlyAppWeb.BudgetListLive do
   use SpendlyAppWeb, :live_view
 
   def mount(_params, _session, socket) do
-    budgets = Tracking.list_budgets()
+    budgets =
+      Tracking.list_budgets(user: socket.assigns.current_user)
+
     socket = assign(socket, budgets: budgets)
+
     {:ok, socket}
   end
 
@@ -25,7 +28,7 @@ defmodule SpendlyAppWeb.BudgetListLive do
     <div class="flex justify-end">
       <.link
         navigate={~p"/budgets/new"}
-        class="flex gap-2 items-center px-3 py-2 text-gray-700 rounded-lg bg-slate-200 hover:bg-gray-200 hover:text-gray-800"
+        class="flex items-center gap-2 px-3 py-2 text-gray-700 rounded-lg bg-slate-200 hover:bg-gray-200 hover:text-gray-800"
       >
         <.icon name="hero-plus" class="w-4 h-4" />
         <span>New Budget</span>
