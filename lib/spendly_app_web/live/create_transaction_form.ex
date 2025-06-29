@@ -52,7 +52,7 @@ defmodule SpendlyAppWeb.CreateTransactionForm do
 
   defp default_transaction do
     %BudgetTransaction{
-      effective_date: Date.to_iso8601(Date.utc_today())
+      effective_date: Date.utc_today()
     }
   end
 end
