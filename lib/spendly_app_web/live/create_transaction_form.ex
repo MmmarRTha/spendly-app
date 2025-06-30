@@ -35,7 +35,7 @@ defmodule SpendlyAppWeb.CreateTransactionForm do
       {:ok, _transaction} ->
         socket =
           socket
-          |> put_flash(:info, "Transaction created successfully.")
+          |> put_flash(:info, "Transaction created.")
           |> push_navigate(to: ~p"/budgets/#{budget}", replace: true)
 
         {:noreply, socket}

@@ -24,6 +24,7 @@ defmodule SpendlyApp.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import SpendlyApp.DataCase
+      import SpendlyApp.Factory
     end
   end
 

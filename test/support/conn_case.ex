@@ -28,6 +28,7 @@ defmodule SpendlyAppWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import SpendlyAppWeb.ConnCase
+      import SpendlyApp.Factory
       import Plug.HTML, only: [html_escape: 1]
     end
   end
